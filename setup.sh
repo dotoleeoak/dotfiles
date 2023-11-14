@@ -2,7 +2,7 @@
 set -x
 
 # Load Wakatime API key
-if test -v WAKATIME_API; then {
+if [ ! -z WAKATIME_API ]; then {
     printf '%s\n' '[settings]' "api_key = ${WAKATIME_API}" > "$HOME/.wakatime.cfg";
 } fi
 
