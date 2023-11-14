@@ -1,6 +1,11 @@
 #!/bin/sh
 set -x
 
+# Load Wakatime API key
+if test -v WAKATIME_API; then {
+    printf '%s\n' '[settings]' "api_key = ${WAKATIME_API}" > "$HOME/.wakatime.cfg";
+} fi
+
 # signed commit
 # https://github.com/gitpod-io/gitpod/issues/666#issuecomment-534347856
 if [ ! -z $GNUGPG ]; then
