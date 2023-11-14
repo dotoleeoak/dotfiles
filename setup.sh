@@ -18,7 +18,7 @@ if [ ! -z $GPG_KEY ]; then
     git config --global user.signingkey $GPG_KEY
 fi
 
-if [ -r ~/.bash_profile]; then
+if [ -r ~/.bash_profile ]; then
     echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
 else
     echo 'export GPG_TTY=$(tty)' >> ~/.profile
