@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 set -x
 
+BASEDIR=$(dirname $0)
+ln -sf ~/.jaemin $BASEDIR
+
+# Add entry script
+grep -q "~/.jaemin/myrc.sh" ~/.bashrc || echo "source ~/.jaemin/myrc.sh" >> ~/.bashrc
+
+# TODO: install & setup nvim
+
+ln -sf ~/.config/nvim $BASEDIR/nvim
+
+# TODO: install fzf
+# TODO: install & setup tmux
+# TODO: install lazygit
+
 # Load Wakatime API key
 if [ ! -z WAKATIME_API ]; then {
     printf '%s\n' '[settings]' "api_key = ${WAKATIME_API}" > "$HOME/.wakatime.cfg";
@@ -23,3 +37,4 @@ if [ -r ~/.bash_profile ]; then
 else
     echo 'export GPG_TTY=$(tty)' >> ~/.profile
 fi
+
