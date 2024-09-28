@@ -27,12 +27,19 @@ require("lazy").setup({
             -- LSP
             "neovim/nvim-lspconfig",
             config = function()
-                require("lspconfig").pyright.setup({})
-                require("lspconfig").starpls.setup({})
-                require("lspconfig").bzl.setup({})
-                require("lspconfig").terraformls.setup({})
+                local capabilities = require("cmp_nvim_lsp").default_capabilities()
+                require("lspconfig").pyright.setup({ capabilities = capabilities })
+                require("lspconfig").starpls.setup({ capabilities = capabilities })
+                -- require("lspconfig").bzl.setup({ capabilities = capabilities })
+                require("lspconfig").terraformls.setup({
+                    capabilities = capabilities,
+                    filetypes = { "terraform", "terraform-vars", "tf" },
+                })
+                require("lspconfig").jsonls.setup({ capabilities = capabilities })
+                require("lspconfig").jsonnet_ls.setup({ capabilities = capabilities })
             end,
         },
+        { "nvim-treesitter/nvim-treesitter" },
         {
             -- status bar
             "itchyny/lightline.vim",
@@ -50,10 +57,32 @@ require("lazy").setup({
         },
         { "numToStr/Comment.nvim" },
         { "jiangmiao/auto-pairs" },
-        { "junegunn/fzf" },
-        { "junegunn/fzf.vim" },
+        { "preservim/nerdtree" },
+        -- { "junegunn/fzf" },
+        -- { "junegunn/fzf.vim" },
+        { "google/vim-jsonnet" },
         {
-            -- git integration
+            -- fuzzy finder
+            "nvim-telescope/telescope.nvim",
+            tag = "0.1.8",
+            dependencies = { "nvim-lua/plenary.nvim" },
+            keys = {
+                { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>" },
+                { "<leader>fg", "<cmd>Telescope live_grep<cr>" },
+                { "<leader>fb", "<cmd>Telescope buffers<cr>" },
+                { "<leader>fh", "<cmd>Telescope help_tags<cr>" },
+            },
+        },
+        {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+        },
+        {
+            -- Git integration
+            "tpope/vim-fugitive",
+        },
+        {
+            -- git blame
             "lewis6991/gitsigns.nvim",
             opts = {
                 current_line_blame = true,
@@ -67,6 +96,11 @@ require("lazy").setup({
                     lua = { "stylua" },
                     bzl = { "buildifier" },
                     python = { "yapf" },
+                    jsonnet = { "jsonnetfmt" },
+                    sh = { "shfmt" },
+                    tf = { "terraform_fmt" },
+                    terraform = { "terraform_fmt" },
+                    yaml = { "yamlfmt" },
                 },
                 format_on_save = {
                     lsp_format = "fallback",
@@ -82,10 +116,39 @@ require("lazy").setup({
                             "-",
                         },
                     },
+                    buildifier = {
+                        args = {
+                            "-path",
+                            "$FILENAME",
+                        },
+                    },
                 },
             },
         },
+        {
+            -- autocompletion
+            "hrsh7th/nvim-cmp",
+            dependencies = {
+                "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-path",
+                "hrsh7th/cmp-buffer",
+            },
+            config = function()
+                require("plugin.nvim-cmp")
+            end,
+        },
+        {
+            -- linter
+            "mfussenegger/nvim-lint",
+            config = function()
+                require("lint").linters_by_ft = {
+                    bzl = { "buildifier" },
+                    sh = { "shellcheck" },
+                }
+            end,
+        },
     },
+
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
     -- install = { colorscheme = { "habamax" } },

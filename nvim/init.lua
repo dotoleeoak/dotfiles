@@ -8,5 +8,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.scrolloff = 3
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.g.mapleader = "<Space>"
 
 require("config.lazy")
