@@ -30,53 +30,112 @@ require("lazy").setup({
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
                 require("lspconfig").pyright.setup({ capabilities = capabilities })
                 require("lspconfig").starpls.setup({ capabilities = capabilities })
-                -- require("lspconfig").bzl.setup({ capabilities = capabilities })
                 require("lspconfig").terraformls.setup({
                     capabilities = capabilities,
                     filetypes = { "terraform", "terraform-vars", "tf" },
                 })
-                require("lspconfig").jsonls.setup({ capabilities = capabilities })
+                require("lspconfig").jsonls.setup({ capabiliities = capabilities })
                 require("lspconfig").jsonnet_ls.setup({ capabilities = capabilities })
+                require("lspconfig").bazelrc_lsp.setup({ capabilities = capabilities })
             end,
         },
-        { "nvim-treesitter/nvim-treesitter" },
         {
-            -- status bar
-            "itchyny/lightline.vim",
+            "nvim-treesitter/nvim-treesitter",
             config = function()
-                vim.g.lightline = { colorscheme = "wombat" }
-                vim.opt.laststatus = 2
-                vim.opt.showmode = false
+                ensure_installed = { "bash", "c", "lua", "markdown", "python", "yaml" }
             end,
+        },
+        {
+            "nvim-lualine/lualine.nvim",
+            opts = {
+                options = {
+                    icons_enabled = false,
+                    theme = "auto",
+                },
+                sections = {
+                    lualine_a = { "mode" },
+                    lualine_b = { "branch" },
+                    lualine_c = { { "filename", path = 1 } },
+                    -- lualine_c = {
+                    --     {
+                    --         "buffers",
+                    --         show_filename_only = false,
+                    --         show_modified_status = true,
+                    --     },
+                    -- },
+                },
+            },
         },
         {
             -- terminal
             "akinsho/toggleterm.nvim",
             version = "*",
             config = true,
+            keys = {
+                { "<leader>tt", "<cmd>ToggleTerm<cr>" },
+            },
         },
         { "numToStr/Comment.nvim" },
         { "jiangmiao/auto-pairs" },
         { "preservim/nerdtree" },
-        -- { "junegunn/fzf" },
-        -- { "junegunn/fzf.vim" },
         { "google/vim-jsonnet" },
+        {
+            "folke/todo-comments.nvim",
+            opts = {
+                signs = false,
+                highlight = {
+                    multiline = true,
+                },
+            },
+        },
         {
             -- fuzzy finder
             "nvim-telescope/telescope.nvim",
             tag = "0.1.8",
-            dependencies = { "nvim-lua/plenary.nvim" },
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+                "nvim-telescope/telescope-live-grep-args.nvim",
+                {
+                    "nvim-telescope/telescope-fzf-native.nvim",
+                    build = "make",
+                },
+            },
+            opts = function(_, opts)
+                -- Enable searching hidden files in live_grep
+                local telescopeConfig = require("telescope.config")
+                local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+                table.insert(vimgrep_arguments, "--hidden")
+                table.insert(vimgrep_arguments, "--glob")
+                table.insert(vimgrep_arguments, "!**/.git/*")
+                opts.defaults = {
+                    vimgrep_arguments = vimgrep_arguments,
+                }
+
+                -- Enable searching hidden files in find_files
+                opts.pickers = {
+                    find_files = {
+                        hidden = true,
+                        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+                    },
+                    -- live_grep = {
+                    --     mappings = {
+                    --         i = {
+                    --             ["<c-f>"] = custom_pickers.actions.set_extension,
+                    --             ["<c-l>"] = custom_pickers.actions.set_folders,
+                    --         },
+                    --     },
+                    -- },
+                }
+            end,
             keys = {
-                { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>" },
-                { "<leader>fg", "<cmd>Telescope live_grep<cr>" },
+                { "<leader>ff", "<cmd>Telescope find_files<cr>" },
+                -- { "<leader>ff", "<cmd>Telescope live_grep<cr>" },
+                { "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>" },
                 { "<leader>fb", "<cmd>Telescope buffers<cr>" },
                 { "<leader>fh", "<cmd>Telescope help_tags<cr>" },
             },
         },
-        {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-        },
+
         {
             -- Git integration
             "tpope/vim-fugitive",
@@ -100,7 +159,8 @@ require("lazy").setup({
                     sh = { "shfmt" },
                     tf = { "terraform_fmt" },
                     terraform = { "terraform_fmt" },
-                    yaml = { "yamlfmt" },
+                    yaml = { "prettier" },
+                    ["*"] = { "trim_newlines", "trim_whitespace" },
                 },
                 format_on_save = {
                     lsp_format = "fallback",
@@ -122,6 +182,7 @@ require("lazy").setup({
                             "$FILENAME",
                         },
                     },
+                    prettier = {},
                 },
             },
         },
@@ -130,6 +191,7 @@ require("lazy").setup({
             "hrsh7th/nvim-cmp",
             dependencies = {
                 "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-nvim-lsp-signature-help",
                 "hrsh7th/cmp-path",
                 "hrsh7th/cmp-buffer",
             },
@@ -146,6 +208,60 @@ require("lazy").setup({
                     sh = { "shellcheck" },
                 }
             end,
+        },
+        {
+            "nvim-tree/nvim-tree.lua",
+            opts = {
+                renderer = {
+                    indent_markers = {
+                        icons = {
+                            corner = ">",
+                            edge = "|",
+                            item = "|",
+                            bottom = "-",
+                        },
+                    },
+                    icons = {
+                        glyphs = {
+                            folder = {
+                                arrow_closed = "▸",
+                                arrow_open = "▾",
+                                default = "",
+                                open = "",
+                                empty = "",
+                                empty_open = "",
+                                symlink = "",
+                                symlink_open = "",
+                            },
+                        },
+                        show = {
+                            file = false,
+                            folder = false,
+                            folder_arrow = true,
+                            git = true,
+                        },
+                    },
+                },
+            },
+            keys = {
+                { "<leader>s", "<cmd>NvimTreeToggle<cr>" },
+            },
+        },
+        {
+            "kdheepak/lazygit.nvim",
+            cmd = {
+                "LazyGit",
+                "LazyGitConfig",
+                "LazyGitCurrentFile",
+                "LazyGitFilter",
+                "LazyGitFilterCurrentFile",
+            },
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+            },
+            keys = {
+                { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+            },
         },
     },
 
