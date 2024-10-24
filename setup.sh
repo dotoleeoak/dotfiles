@@ -7,6 +7,10 @@ ln -sf ~/.jaemin $BASEDIR
 # Add entry script
 grep -q "~/.jaemin/myrc.sh" ~/.bashrc || echo "source ~/.jaemin/myrc.sh" >>~/.bashrc
 
+# Install homebrew (Mac only)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 # TODO: install & setup nvim
 
 ln -sf ~/.config/nvim $BASEDIR/nvim
