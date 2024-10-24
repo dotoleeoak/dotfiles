@@ -40,6 +40,7 @@ fi
 # Install fzf
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if [ ! -d $HOME/.fzf ]; then
+        # TODO: manage with git submodules
         git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
         $HOME/.fzf/install
     fi
