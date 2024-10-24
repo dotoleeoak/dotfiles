@@ -11,7 +11,16 @@ grep -q "~/.jaemin/myrc.sh" ~/.bashrc || echo "source ~/.jaemin/myrc.sh" >>~/.ba
 if [[ "$OSTYPE" == "darwin"* ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-# TODO: install & setup nvim
+
+# Install neovim
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    sudo rm -rf /opt/nvim
+    sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    rm nvim-linux64.tar.gz
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install neovim
+fi
 
 ln -sf ~/.config/nvim $BASEDIR/nvim
 

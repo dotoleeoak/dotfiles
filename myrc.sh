@@ -2,6 +2,9 @@ alias vim="nvim"
 alias vi="nvim"
 alias lg="lazygit"
 
+# Update PATH
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
 # Set up fzf key bindings and fuzzy completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 eval "$(fzf --bash)"
