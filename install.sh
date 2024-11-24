@@ -7,16 +7,30 @@
 BASEDIR=$(realpath $(dirname $0))
 echo "BASEDIR: $BASEDIR"
 
-# Add entry script
-# TODO: replace bash with zsh
-if ! grep -q "source $BASEDIR/setup.sh" $HOME/.bashrc; then
-    echo "source $BASEDIR/setup.sh" >>$HOME/.bashrc
-fi
-
 # Install homebrew (Mac only)
 if [[ "$OSTYPE" == "darwin"* ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+
+# Install zsh
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    sudo apt install -y zsh
+    chsh -s $(which zsh)
+fi
+
+# Add entry script
+if ! grep -q "source $BASEDIR/setup.sh" $HOME/.zshrc; then
+    echo "source $BASEDIR/setup.sh" >>$HOME/.zshrc
+fi
+
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Install powerlevel10k
+# TODO: auto-install with git submodule
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.p10k
+exec zsh
+p10k configure
 
 # Install neovim
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -42,8 +56,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if [ ! -d $HOME/.fzf ]; then
         # TODO: manage with git submodules
         git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-        $HOME/.fzf/install
     fi
+    $HOME/.fzf/install
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install fzf
 fi
@@ -61,7 +75,7 @@ fi
 
 # Install tmux
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    sudo apt install tmux
+    sudo apt install -y tmux
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install tmux
 fi
