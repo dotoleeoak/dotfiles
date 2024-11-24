@@ -11,12 +11,15 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.showmode = false
 
+-- Open all folds by default
+vim.opt.foldlevelstart = 99
+
 vim.g.mapleader = "<Space>"
+vim.g.maplocalleader = ","
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.keymap.set("n", "<leader>n", "<cmd>bnext<cr>")
-vim.keymap.set("n", "<leader>p", "<cmd>bprevious<cr>")
-vim.keymap.set("n", "<leader>d", "<cmd>bdelete<cr>")
+vim.keymap.set("n", "<leader>ec", ":e $MYVIMRC<cr>")
+vim.keymap.set("n", "<leader>sc", ":source $MYVIMRC<cr>")
 
 require("config.lazy")

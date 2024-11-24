@@ -27,22 +27,23 @@ require("lazy").setup({
             -- LSP
             "neovim/nvim-lspconfig",
             config = function()
+                local lsp = require("lspconfig")
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-                require("lspconfig").pyright.setup({ capabilities = capabilities })
-                require("lspconfig").starpls.setup({ capabilities = capabilities })
-                require("lspconfig").terraformls.setup({
-                    capabilities = capabilities,
-                    filetypes = { "terraform", "terraform-vars", "tf" },
-                })
-                require("lspconfig").jsonls.setup({ capabiliities = capabilities })
-                require("lspconfig").jsonnet_ls.setup({ capabilities = capabilities })
-                require("lspconfig").bazelrc_lsp.setup({ capabilities = capabilities })
+
+                lsp.pyright.setup({ capabilities = capabilities })
+                lsp.starpls.setup({ capabilities = capabilities })
+                lsp.terraformls.setup({ capabilities = capabilities })
+                lsp.jsonls.setup({ capabiliities = capabilities })
+                lsp.jsonnet_ls.setup({ capabilities = capabilities })
+                lsp.rust_analyzer.setup({ capabilities = capabilities })
+                lsp.bazelrc_lsp.setup({ capabilities = capabilities })
+                lsp.gopls.setup({ capabilities = capabilities })
             end,
         },
         {
             "nvim-treesitter/nvim-treesitter",
             config = function()
-                ensure_installed = { "bash", "c", "lua", "markdown", "python", "yaml" }
+                ensure_installed = { "bash", "c", "lua", "markdown", "python", "yaml", "jsonnet" }
             end,
         },
         {
@@ -77,7 +78,6 @@ require("lazy").setup({
         },
         { "numToStr/Comment.nvim" },
         { "jiangmiao/auto-pairs" },
-        { "preservim/nerdtree" },
         { "google/vim-jsonnet" },
         {
             "folke/todo-comments.nvim",
@@ -129,7 +129,6 @@ require("lazy").setup({
             end,
             keys = {
                 { "<leader>ff", "<cmd>Telescope find_files<cr>" },
-                -- { "<leader>ff", "<cmd>Telescope live_grep<cr>" },
                 { "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>" },
                 { "<leader>fb", "<cmd>Telescope buffers<cr>" },
                 { "<leader>fh", "<cmd>Telescope help_tags<cr>" },
@@ -154,7 +153,9 @@ require("lazy").setup({
                 formatters_by_ft = {
                     lua = { "stylua" },
                     bzl = { "buildifier" },
+                    go = { "gofmt" },
                     python = { "yapf" },
+                    rust = { "rustfmt" },
                     jsonnet = { "jsonnetfmt" },
                     sh = { "shfmt" },
                     tf = { "terraform_fmt" },
@@ -178,6 +179,7 @@ require("lazy").setup({
                     },
                     buildifier = {
                         args = {
+                            "--lint=fix",
                             "-path",
                             "$FILENAME",
                         },
@@ -197,16 +199,6 @@ require("lazy").setup({
             },
             config = function()
                 require("plugin.nvim-cmp")
-            end,
-        },
-        {
-            -- linter
-            "mfussenegger/nvim-lint",
-            config = function()
-                require("lint").linters_by_ft = {
-                    bzl = { "buildifier" },
-                    sh = { "shellcheck" },
-                }
             end,
         },
         {
@@ -263,6 +255,61 @@ require("lazy").setup({
                 { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
             },
         },
+        {
+            -- code search
+            "MagicDuck/grug-far.nvim",
+            config = function()
+                require("grug-far").setup({
+                    -- options, see Configuration section below
+                    -- there are no required options atm
+                    -- engine = 'ripgrep' is default, but 'astgrep' can be specified
+                })
+            end,
+            keys = {
+                { "<leader>gf", "<cmd>GrugFar<cr>" },
+            },
+        },
+        {
+            -- folding
+            "kevinhwang91/nvim-ufo",
+            dependencies = { "kevinhwang91/promise-async" },
+            opts = {
+                provider_selector = function(bufnr, filetype, buftype)
+                    return { "treesitter", "indent" }
+                end,
+            },
+        },
+        -- {
+        --     -- indent highlight
+        --     "lukas-reineke/indent-blankline.nvim",
+        --     main = "ibl",
+        --     config = function()
+        --         local highlight = {
+        --             "RainbowRed",
+        --             "RainbowYellow",
+        --             "RainbowBlue",
+        --             "RainbowOrange",
+        --             "RainbowGreen",
+        --             "RainbowViolet",
+        --             "RainbowCyan",
+        --         }
+        --
+        --         local hooks = require("ibl.hooks")
+        --         -- create the highlight groups in the highlight setup hook, so they are reset
+        --         -- every time the colorscheme changes
+        --         hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        --             vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#7e616b" })
+        --             vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#807d6d" })
+        --             vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#547894" })
+        --             vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#797166" })
+        --             vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#5c716a" })
+        --             vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#65627e" })
+        --             vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#4f6e78" })
+        --         end)
+        --
+        --         require("ibl").setup({ indent = { highlight = highlight } })
+        --     end,
+        -- },
     },
 
     -- Configure any other settings here. See the documentation for more details.
