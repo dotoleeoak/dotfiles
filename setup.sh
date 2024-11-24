@@ -1,7 +1,6 @@
 alias vim="nvim"
 alias vi="nvim"
 alias lg="lazygit"
-alias fd="fdfind"
 
 # Update PATH
 export PATH="$PATH:/opt/nvim-linux64/bin"

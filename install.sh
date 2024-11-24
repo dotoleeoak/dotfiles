@@ -28,9 +28,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # Install powerlevel10k
 # TODO: auto-install with git submodule
+# TODO: configure p10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.p10k
-exec zsh
-p10k configure
 
 # Install neovim
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -92,4 +91,12 @@ fi
 # Install tpm
 if [ ! -d $HOME/.tmux/plugins/tpm ]; then
     git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+fi
+
+# Install fd-find
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    sudo apt install -y fd-find
+    ln -s $(which fdfind) ~/.local/bin/fd
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install fd
 fi
