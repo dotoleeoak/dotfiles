@@ -19,6 +19,7 @@ require("lazy").setup({
             -- colorscheme
             "projekt0n/github-nvim-theme",
             lazy = false,
+            version = "*",
             config = function()
                 vim.cmd("colorscheme github_dark")
             end,
@@ -26,22 +27,36 @@ require("lazy").setup({
         {
             -- LSP
             "neovim/nvim-lspconfig",
+            version = "*",
             config = function()
                 local lsp = require("lspconfig")
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-                lsp.pyright.setup({ capabilities = capabilities })
-                lsp.starpls.setup({ capabilities = capabilities })
-                lsp.terraformls.setup({ capabilities = capabilities })
-                lsp.jsonls.setup({ capabiliities = capabilities })
-                lsp.jsonnet_ls.setup({ capabilities = capabilities })
-                lsp.rust_analyzer.setup({ capabilities = capabilities })
+                lsp.bashls.setup({ capabilities = capabilities })
                 lsp.bazelrc_lsp.setup({ capabilities = capabilities })
                 lsp.gopls.setup({ capabilities = capabilities })
+                lsp.jsonls.setup({ capabilities = capabilities })
+                lsp.jsonnet_ls.setup({ capabilities = capabilities })
+                lsp.pyright.setup({ capabilities = capabilities })
+                lsp.rust_analyzer.setup({ capabilities = capabilities })
+                lsp.starpls.setup({ capabilities = capabilities })
+                lsp.terraformls.setup({ capabilities = capabilities })
+                lsp.ccls.setup({
+                    capabilities = capabilities,
+                    init_options = {
+                        cache = {
+                            directory = "/tmp/ccls-cache",
+                        },
+                    },
+                })
             end,
+            -- keys = {
+            --     { "<leader>e", "<cmd>lua vim.diagnostic.open_float(0, {scope='line'})<cr>" },
+            -- },
         },
         {
             "nvim-treesitter/nvim-treesitter",
+            version = "*",
             config = function()
                 ensure_installed = { "bash", "c", "lua", "markdown", "python", "yaml", "jsonnet" }
             end,
@@ -55,15 +70,8 @@ require("lazy").setup({
                 },
                 sections = {
                     lualine_a = { "mode" },
-                    lualine_b = { "branch" },
-                    lualine_c = { { "filename", path = 1 } },
-                    -- lualine_c = {
-                    --     {
-                    --         "buffers",
-                    --         show_filename_only = false,
-                    --         show_modified_status = true,
-                    --     },
-                    -- },
+                    lualine_b = { { "filename", path = 1 } },
+                    lualine_c = {},
                 },
             },
         },
@@ -92,12 +100,24 @@ require("lazy").setup({
             -- fuzzy finder
             "nvim-telescope/telescope.nvim",
             tag = "0.1.8",
+            version = "*",
             dependencies = {
                 "nvim-lua/plenary.nvim",
                 "nvim-telescope/telescope-live-grep-args.nvim",
                 {
                     "nvim-telescope/telescope-fzf-native.nvim",
                     build = "make",
+                    version = "*",
+                    config = function()
+                        require("telescope").load_extension("fzf")
+                    end,
+                },
+                {
+                    "nvim-telescope/telescope-frecency.nvim",
+                    version = "*",
+                    config = function()
+                        require("telescope").load_extension("frecency")
+                    end,
                 },
             },
             opts = function(_, opts)
@@ -109,6 +129,7 @@ require("lazy").setup({
                 table.insert(vimgrep_arguments, "!**/.git/*")
                 opts.defaults = {
                     vimgrep_arguments = vimgrep_arguments,
+                    path_display = { "truncate" },
                 }
 
                 -- Enable searching hidden files in find_files
@@ -117,14 +138,6 @@ require("lazy").setup({
                         hidden = true,
                         find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
                     },
-                    -- live_grep = {
-                    --     mappings = {
-                    --         i = {
-                    --             ["<c-f>"] = custom_pickers.actions.set_extension,
-                    --             ["<c-l>"] = custom_pickers.actions.set_folders,
-                    --         },
-                    --     },
-                    -- },
                 }
             end,
             keys = {
@@ -149,18 +162,20 @@ require("lazy").setup({
         {
             -- formatter
             "stevearc/conform.nvim",
+            version = "*",
             opts = {
                 formatters_by_ft = {
                     lua = { "stylua" },
                     bzl = { "buildifier" },
                     go = { "gofmt" },
                     python = { "yapf" },
+                    cpp = { "clang-format" },
                     rust = { "rustfmt" },
                     jsonnet = { "jsonnetfmt" },
-                    sh = { "shfmt" },
+                    -- sh = { "shfmt" },
                     tf = { "terraform_fmt" },
                     terraform = { "terraform_fmt" },
-                    yaml = { "prettier" },
+                    -- yaml = { "prettier" },
                     ["*"] = { "trim_newlines", "trim_whitespace" },
                 },
                 format_on_save = {
@@ -200,6 +215,18 @@ require("lazy").setup({
             config = function()
                 require("plugin.nvim-cmp")
             end,
+        },
+        {
+            "stevearc/oil.nvim",
+            version = "*",
+            opts = {
+                view_options = {
+                    show_hidden = true,
+                },
+            },
+            keys = {
+                { "-", "<cmd>Oil<cr>" },
+            },
         },
         {
             "nvim-tree/nvim-tree.lua",
@@ -258,13 +285,11 @@ require("lazy").setup({
         {
             -- code search
             "MagicDuck/grug-far.nvim",
-            config = function()
-                require("grug-far").setup({
-                    -- options, see Configuration section below
-                    -- there are no required options atm
-                    -- engine = 'ripgrep' is default, but 'astgrep' can be specified
-                })
-            end,
+            opts = {
+                openTargetWindow = {
+                    preferredLocation = "right",
+                },
+            },
             keys = {
                 { "<leader>gf", "<cmd>GrugFar<cr>" },
             },
@@ -279,6 +304,50 @@ require("lazy").setup({
                 end,
             },
         },
+        {
+            "ErichDonGubler/lsp_lines.nvim",
+        },
+        {
+            "wakatime/vim-wakatime",
+        },
+        {
+            -- surrounding pairs
+            "kylechui/nvim-surround",
+            version = "*",
+            event = "VeryLazy",
+            opts = {},
+        },
+        {
+            -- easy navigation
+            "smoka7/hop.nvim",
+            version = "*",
+            opts = {},
+            keys = {
+                { "<leader>hw", "<cmd>HopWord<cr>" },
+                { "<leader>hc", "<cmd>HopChar1<cr>" },
+            },
+        },
+        {
+            "yetone/avante.nvim",
+            event = "VeryLazy",
+            lazy = false,
+            version = "*",
+            build = "make BUILD_FROM_SOURCE=true",
+            opts = {
+                provider = "claude",
+                -- auto_suggestions_provider = "claude",
+                behaviour = {
+                    -- auto_suggestions = true,
+                    -- support_paste_from_clipboard = true,
+                },
+            },
+            dependencies = {
+                "stevearc/dressing.nvim",
+                "nvim-lua/plenary.nvim",
+                "MunifTanjim/nui.nvim",
+            },
+        },
+        { "github/copilot.vim" },
         -- {
         --     -- indent highlight
         --     "lukas-reineke/indent-blankline.nvim",

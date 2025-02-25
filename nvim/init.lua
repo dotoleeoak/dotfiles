@@ -21,5 +21,8 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.keymap.set("n", "<leader>ec", ":e $MYVIMRC<cr>")
 vim.keymap.set("n", "<leader>sc", ":source $MYVIMRC<cr>")
+vim.keymap.set("n", "<leader>bn", ":bnext")
+vim.keymap.set("n", "<leader>bp", ":bprev")
+vim.keymap.set("n", "<leader>i", ":lua vim.diagnostic.open_float(nil, { focus = false, scope = 'cursor' })")
 
 require("config.lazy")

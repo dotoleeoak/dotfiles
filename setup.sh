@@ -1,14 +1,21 @@
 alias vim="nvim"
 alias vi="nvim"
 alias lg="lazygit"
+alias fd="fdfind"
 
 # Update PATH
 export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:$HOME/go/bin"
 
 # Set up fzf key bindings and fuzzy completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source <(fzf --zsh)
 export FZF_COMPLETION_TRIGGER='**'
+
+# Use vim key binding
+bindkey -v
 
 # Set zsh theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -42,3 +49,7 @@ source $HOME/.p10k/powerlevel10k.zsh-theme
 # }
 #
 # [ -n "$BASH" ] && complete -F _fzf_complete_bazel -o default -o bashdefault bazel
+#
+
+# Activate zoxide (should be end of this file)
+eval "$(zoxide init zsh)"
