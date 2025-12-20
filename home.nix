@@ -1,0 +1,69 @@
+{ config, pkgs, ... }:
+
+{
+  home.stateVersion = "25.11";
+
+  home.username = "dotol";
+  home.homeDirectory = "/Users/dotol";
+
+  home.packages = with pkgs; [
+    bitwarden-cli
+    fd
+    fzf
+    gh
+    git
+    lazygit
+    neovim
+    ripgrep
+    starship
+    tmux
+    zoxide
+    zsh
+
+    awscli2
+    bazelisk
+    kubectl
+    uv
+  ];
+
+  programs.home-manager.enable = true;
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      add_newline = false;
+      line_break = {
+        disabled = true;
+      };
+    };
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    initContent = "bindkey -v";
+
+    shellAliases = {
+      bazel = "bazelisk";
+      k = "kubectl";
+      lg = "lazygit";
+      tf = "terraform";
+      vi = "nvim";
+      vim = "nvim";
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "aws"
+        "brew"
+        "docker"
+        "fzf"
+        "git"
+        "kubectl"
+        "zoxide"
+      ];
+    };
+  };
+}
