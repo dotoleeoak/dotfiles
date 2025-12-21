@@ -18,6 +18,7 @@
     ripgrep
     starship
     tmux
+    tree
     zoxide
     zsh
 
