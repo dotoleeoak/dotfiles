@@ -10,6 +10,7 @@
     bitwarden-cli
     fd
     fzf
+    gemini-cli
     gh
     git
     lazygit
@@ -25,6 +26,13 @@
     kubectl
     uv
   ];
+
+  home.file = {
+    ".config/nvim".source =
+      config.lib.file.mkOutOfStoreSymlink "/Users/dotol/.config/home-manager/nvim";
+    ".config/tmux".source =
+      config.lib.file.mkOutOfStoreSymlink "/Users/dotol/.config/home-manager/tmux";
+  };
 
   programs.home-manager.enable = true;
 
