@@ -259,6 +259,9 @@ require("lazy").setup({
             keys = {
                 { "-", "<cmd>Oil<cr>" },
             },
+            dependencies = {
+                "benomahony/oil-git.nvim",
+            }
         },
         {
             -- lazygit integration
