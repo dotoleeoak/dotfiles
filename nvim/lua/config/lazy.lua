@@ -130,7 +130,11 @@ require("lazy").setup({
         {
             -- fuzzy finder
             "ibhagwan/fzf-lua",
-            opts = {},
+            opts = {
+                grep = {
+                    hidden = true,
+                }
+            },
             keys = {
                 { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find files" },
                 { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "Live Grep" },
