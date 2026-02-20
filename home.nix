@@ -57,6 +57,7 @@
 
     shellAliases = {
       bazel = "bazelisk";
+      ceph = "podman run -it --rm -v ~/.ceph:/etc/ceph quay.io/ceph/ceph:v20 ceph";
       k = "kubectl";
       lg = "lazygit";
       tf = "terraform";
