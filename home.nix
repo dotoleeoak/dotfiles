@@ -33,6 +33,7 @@
       config.lib.file.mkOutOfStoreSymlink "/Users/dotol/.config/home-manager/nvim";
     ".config/tmux".source =
       config.lib.file.mkOutOfStoreSymlink "/Users/dotol/.config/home-manager/tmux";
+    ".claude/settings.json".source = "/Users/dotol/.config/home-manager/claude/settings.json";
   };
 
   home.sessionPath = [
