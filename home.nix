@@ -35,6 +35,10 @@
       config.lib.file.mkOutOfStoreSymlink "/Users/dotol/.config/home-manager/tmux";
   };
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   programs.home-manager.enable = true;
 
   programs.starship = {
