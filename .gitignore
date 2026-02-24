@@ -1,1 +1,4 @@
 .DS_Store
+
+# Neovim
+nvim/lazy-lock.json
