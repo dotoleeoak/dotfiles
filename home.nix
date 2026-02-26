@@ -19,12 +19,16 @@
     starship
     tmux
     tree
+    xxh
+    yazi
     zoxide
     zsh
 
     awscli2
     bazelisk
     kubectl
+    nixfmt
+    pipx
     uv
   ];
 
@@ -39,6 +43,10 @@
   home.sessionPath = [
     "$HOME/.local/bin"
   ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 
   programs.home-manager.enable = true;
 
@@ -58,7 +66,17 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    initContent = "bindkey -v";
+    initContent = ''
+      bindkey -v
+
+      function y() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        command yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d ''' cwd < "$tmp"
+        [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+        rm -f -- "$tmp"
+      }
+    '';
 
     shellAliases = {
       bazel = "bazelisk";
