@@ -1,10 +1,14 @@
 { config, pkgs, ... }:
 
+let
+  hmDir = "${config.home.homeDirectory}/.config/home-manager";
+  mkSymlink = config.lib.file.mkOutOfStoreSymlink;
+in
 {
   home.stateVersion = "25.11";
 
-  home.username = "dotol";
-  home.homeDirectory = "/Users/dotol";
+  home.username = builtins.getEnv "USER";
+  home.homeDirectory = builtins.getEnv "HOME";
 
   home.packages = with pkgs; [
     bitwarden-cli
@@ -33,11 +37,10 @@
   ];
 
   home.file = {
-    ".config/nvim".source =
-      config.lib.file.mkOutOfStoreSymlink "/Users/dotol/.config/home-manager/nvim";
-    ".config/tmux".source =
-      config.lib.file.mkOutOfStoreSymlink "/Users/dotol/.config/home-manager/tmux";
-    ".claude/settings.json".source = "/Users/dotol/.config/home-manager/claude/settings.json";
+    ".config/nvim".source = mkSymlink "${hmDir}/nvim/";
+    ".config/tmux".source = mkSymlink "${hmDir}/tmux/";
+    ".claude/agents".source = mkSymlink "${hmDir}/claude/agents/";
+    ".claude/settings.json".source = "${hmDir}/claude/settings.json";
   };
 
   home.sessionPath = [
