@@ -133,7 +133,7 @@ require("lazy").setup({
             opts = {
                 grep = {
                     hidden = true,
-                }
+                },
             },
             keys = {
                 { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find files" },
@@ -265,7 +265,7 @@ require("lazy").setup({
             },
             dependencies = {
                 "benomahony/oil-git.nvim",
-            }
+            },
         },
         {
             -- lazygit integration
@@ -374,6 +374,15 @@ require("lazy").setup({
                     desc = "Buffer Local Keymaps (which-key)",
                 },
             },
+        },
+        {
+            "iamcco/markdown-preview.nvim",
+            cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+            build = "cd app && yarn install",
+            ft = { "markdown" },
+            init = function()
+                vim.g.mkdp_filetypes = { "markdown" }
+            end,
         },
     },
 
