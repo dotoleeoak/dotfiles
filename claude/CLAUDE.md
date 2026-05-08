@@ -4,7 +4,7 @@
 - Exceptionally prefer Korean when writing markdown like README.md.
 - Rather than guessing specs/features, check internal source code, which is under ~/Workspace/claude-sources.
 - If there's no source code under claude-sources which open-sourced, you can freely clone one under there.
-- I'm open for discussion, so always prefer asking questions if given prompt is ambighous, do not guess.
+- I'm open for discussion, so always prefer asking questions if given prompt is ambiguous. Never make assumptions.
 - Give concise answer with key points, avoid verbosity. If you're not sure what to do or answer, give questions.
 
 ## Coding
