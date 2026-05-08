@@ -3,5 +3,7 @@
     "additionalDirectories": [
       "~/Workspace/claude-sources"
     ]
-  }
+  },
+  "awaySummaryEnabled": false,
+  "editorMode": "vim"
 }
