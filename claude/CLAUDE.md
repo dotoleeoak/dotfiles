@@ -26,5 +26,5 @@
 
 ## Current Project
 
-- I'm working on deploying Ceph cluster for public cloud service, providing block device(RBD), object storage(RGW), and NAS(CephFS, NFS)
+- I'm working on opearating production Ceph cluster.
 - I focus on opearating Ceph with reliability and high performance, trying to automate troubleshooting, deloyment, etc.
