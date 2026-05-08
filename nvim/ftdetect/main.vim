@@ -9,3 +9,6 @@ au BufRead,BufNewFile *.launch        set shiftwidth=2
 au BufRead,BufNewFile *.py.tpl        set filetype=python
 au BufRead,BufNewFile *.yml.tpl       set filetype=yaml
 au BufRead,BufNewFile *.yaml.tpl      set filetype=yaml
+au BufRead,BufNewFile *.lua.j2        set filetype=lua
+au BufRead,BufNewFile *.yml.j2        set filetype=yaml
+au BufRead,BufNewFile *.yaml.j2       set filetype=yaml
