@@ -33,18 +33,25 @@ in
     kubectl
     nixfmt
     pipx
+    pnpm
+    prettier
+    pyright
+    stylua
     uv
+    yarn
   ];
 
   home.file = {
     ".config/nvim".source = mkSymlink "${hmDir}/nvim/";
     ".config/tmux".source = mkSymlink "${hmDir}/tmux/";
     ".claude/agents".source = mkSymlink "${hmDir}/claude/agents/";
-    ".claude/settings.json".source = "${hmDir}/claude/settings.json";
+    ".claude/settings.json".source = mkSymlink "${hmDir}/claude/settings.json";
+    ".claude/CLAUDE.md".source = mkSymlink "${hmDir}/claude/CLAUDE.md";
   };
 
   home.sessionPath = [
     "$HOME/.local/bin"
+    "$HOME/go/bin"
   ];
 
   home.sessionVariables = {
