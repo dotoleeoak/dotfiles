@@ -49,6 +49,7 @@ require("lazy").setup({
                     },
                 })
 
+                vim.lsp.enable("ansiblels")
                 vim.lsp.enable("bashls")
                 vim.lsp.enable("bazelrc_lsp")
                 vim.lsp.enable("ccls")
@@ -60,45 +61,13 @@ require("lazy").setup({
                 vim.lsp.enable("jsonnet_ls")
                 vim.lsp.enable("nixd")
                 vim.lsp.enable("prismals")
-                vim.lsp.enable("pyright")
+                vim.lsp.enable("pyrefly")
+                vim.lsp.enable("ruff")
                 vim.lsp.enable("rust_analyzer")
                 vim.lsp.enable("starpls")
                 vim.lsp.enable("terraformls")
                 vim.lsp.enable("ts_ls")
                 vim.lsp.enable("yamlls")
-            end,
-        },
-        {
-            -- Prisma LSP
-            "prisma/vim-prisma",
-        },
-        {
-            "nvim-treesitter/nvim-treesitter",
-            build = ":TSUpdate",
-            event = { "BufReadPost", "BufNewFile" },
-            config = function()
-                require("nvim-treesitter.configs").setup({
-                    ensure_installed = {
-                        "bash",
-                        "c",
-                        "java",
-                        "jsonc",
-                        "jsonnet",
-                        "lua",
-                        "markdown",
-                        "python",
-                        "terraform",
-                        "tsx",
-                        "typescript",
-                        "yaml",
-                    },
-                    highlight = {
-                        enable = true,
-                    },
-                    indent = {
-                        enable = true,
-                    },
-                })
             end,
         },
         {
@@ -128,18 +97,17 @@ require("lazy").setup({
             },
         },
         {
-            -- fuzzy finder
-            "ibhagwan/fzf-lua",
+            -- plugins collection
+            "folke/snacks.nvim",
             opts = {
-                grep = {
-                    hidden = true,
-                },
+                lazygit = { enabled = true },
+                picker = { enabled = true },
+                scroll = { enabled = true },
             },
             keys = {
-                { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find files" },
-                { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "Live Grep" },
-                { "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Find buffers" },
-                { "<leader>fr", "<cmd>FzfLua resume<cr>", desc = "Resume previous fzf" },
+                { "<leader>lg", "<cmd>lua Snacks.lazygit()<cr>", desc = "LazyGit" },
+                { "<leader>ff", "<cmd>lua Snacks.picker.files({ hidden = true })<cr>", desc = "Find Files" },
+                { "<leader>fg", "<cmd>lua Snacks.picker.grep()<cr>", desc = "Grep" },
             },
         },
         {
@@ -186,7 +154,7 @@ require("lazy").setup({
                         jsonnet = { "jsonnetfmt" },
                         lua = { "stylua" },
                         nix = { "nixfmt" },
-                        python = { "yapf" },
+                        python = { "ruff_fix", "ruff_format" },
                         rust = { "rustfmt" },
                         sh = { "shfmt" },
                         terraform = { "terraform_fmt" },
@@ -268,23 +236,6 @@ require("lazy").setup({
             },
         },
         {
-            -- lazygit integration
-            "kdheepak/lazygit.nvim",
-            cmd = {
-                "LazyGit",
-                "LazyGitConfig",
-                "LazyGitCurrentFile",
-                "LazyGitFilter",
-                "LazyGitFilterCurrentFile",
-            },
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-            },
-            keys = {
-                { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-            },
-        },
-        {
             -- code search
             "MagicDuck/grug-far.nvim",
             opts = {
@@ -326,32 +277,10 @@ require("lazy").setup({
                 { "<leader>hc", "<cmd>HopChar1<cr>" },
             },
         },
-        -- {
-        --     "yetone/avante.nvim",
-        --     event = "VeryLazy",
-        --     lazy = false,
-        --     build = "make BUILD_FROM_SOURCE=true",
-        --     opts = {
-        --         provider = "claude",
-        --         -- auto_suggestions_provider = "claude",
-        --         behaviour = {
-        --             -- auto_suggestions = true,
-        --             -- support_paste_from_clipboard = true,
-        --         },
-        --     },
-        --     dependencies = {
-        --         "stevearc/dressing.nvim",
-        --         "nvim-lua/plenary.nvim",
-        --         "MunifTanjim/nui.nvim",
-        --     },
-        -- },
-        { "github/copilot.vim" },
         {
             -- color highlighter
             "norcalli/nvim-colorizer.lua",
-            opts = {
-                "*", -- Highlight all files
-            },
+            opts = { "*" }, -- Highlight all files
         },
         {
             -- git diff viewer

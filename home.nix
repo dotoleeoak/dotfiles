@@ -35,9 +35,13 @@ in
     pipx
     pnpm
     prettier
+    pyrefly
     pyright
+    ruff
     stylua
+    typescript-language-server
     uv
+    yaml-language-server
     yarn
   ];
 
