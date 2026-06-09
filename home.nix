@@ -79,6 +79,16 @@ in
       line_break = {
         disabled = true;
       };
+      format = "$directory$git_branch$git_status$character";
+      right_format = "$time";
+      time = {
+        disabled = false;
+        time_format = "%T";
+        format = "[$time]($style)";
+      };
+      git_branch = {
+        format = "[$symbol$branch(:$remote_branch)]($style) ";
+      };
       git_status = {
         ignore_submodules = true;
       };
