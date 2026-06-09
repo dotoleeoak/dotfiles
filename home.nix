@@ -79,6 +79,9 @@ in
       line_break = {
         disabled = true;
       };
+      git_status = {
+        ignore_submodules = true;
+      };
     };
   };
 
