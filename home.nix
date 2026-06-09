@@ -64,6 +64,13 @@ in
 
   programs.home-manager.enable = true;
 
+  programs.git = {
+    enable = true;
+    settings = {
+      fetch.prune = true;
+    };
+  };
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
