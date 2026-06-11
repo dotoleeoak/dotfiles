@@ -51,8 +51,8 @@ in
     ".claude/agents".source = mkSymlink "${hmDir}/claude/agents/";
     ".claude/settings.json".source = mkSymlink "${hmDir}/claude/settings.json";
     ".claude/CLAUDE.md".source = mkSymlink "${hmDir}/claude/CLAUDE.md";
-    ".pi/settings.json".source = mkSymlink "${hmDir}/pi/settings.json";
-    ".pi/AGENTS.md".source = mkSymlink "${hmDir}/pi/AGENTS.md";
+    ".pi/agent/AGENTS.md".source = mkSymlink "${hmDir}/pi/AGENTS.md";
+    ".pi/agent/settings.json".source = mkSymlink "${hmDir}/pi/settings.json";
   };
 
   home.sessionPath = [
