@@ -13,6 +13,14 @@
 - Simplicity is always first. When the logic gets messy, always review if simpler approach exists.
 - In comments, write 'why' this is implemented this way, rather than 'what' this part of code does.
 
+## Code Reading Workflow
+
+- For source inspection tasks, clone the repo locally under `/tmp/agent-repos` if it is not already present.
+- Prefer local inspection with `rg`, `fd`, `git grep`, `git diff`, and `sed`.
+- Use `gh` only for release notes, PRs, issues, tags, and repository metadata.
+- Avoid GitHub code search when a local clone can answer the question.
+- When possible, checkout the exact release tag/branch before reading code.
+
 ## Tools
 
 - When using Bash for file/content searches, use ripgrep(`rg`) instead of `grep`, and fdfind(`fd`) instead of`find`.
