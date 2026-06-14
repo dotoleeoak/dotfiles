@@ -38,6 +38,7 @@ in
     pyrefly
     pyright
     ruff
+    rustup
     stylua
     typescript-language-server
     uv
@@ -56,6 +57,7 @@ in
   };
 
   home.sessionPath = [
+    "$HOME/.cargo/bin"
     "$HOME/.local/bin"
     "$HOME/go/bin"
   ];
