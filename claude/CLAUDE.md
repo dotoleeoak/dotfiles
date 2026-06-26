@@ -12,6 +12,7 @@
 - Testing is always fundamental to writing code. Rather than writing all the code at once, do test after each step of implementation.
 - Simplicity is always first. When the logic gets messy, always review if simpler approach exists.
 - In comments, write 'why' this is implemented this way, rather than 'what' this part of code does.
+- Don't write a comment that code already describes. Write comments only when necessary, and keep it minimal.
 
 ## Tools
 
