@@ -13,6 +13,7 @@
 - Simplicity is always first. When the logic gets messy, always review if simpler approach exists.
 - In comments, write 'why' this is implemented this way, rather than 'what' this part of code does.
 - Don't write a comment that code already describes. Write comments only when necessary, and keep it minimal.
+- Don't commit/push by yourself. I will manually review changes before any commit, and then commit/push by myself.
 
 ## Tools
 
