@@ -5,7 +5,7 @@ let
   mkSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 
   home.username = builtins.getEnv "USER";
   home.homeDirectory = builtins.getEnv "HOME";
@@ -32,7 +32,6 @@ in
     bazelisk
     kubectl
     nixfmt
-    pipx
     pnpm
     prettier
     pyrefly
