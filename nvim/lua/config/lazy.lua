@@ -278,11 +278,6 @@ require("lazy").setup({
             },
         },
         {
-            -- color highlighter
-            "norcalli/nvim-colorizer.lua",
-            opts = { "*" }, -- Highlight all files
-        },
-        {
             -- git diff viewer
             "sindrets/diffview.nvim",
         },
