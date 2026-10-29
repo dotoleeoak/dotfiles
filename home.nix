@@ -48,7 +48,6 @@ in
   home.file = {
     ".config/nvim".source = mkSymlink "${hmDir}/nvim/";
     ".config/tmux".source = mkSymlink "${hmDir}/tmux/";
-    ".claude/agents".source = mkSymlink "${hmDir}/claude/agents/";
     ".claude/settings.json".source = mkSymlink "${hmDir}/claude/settings.json";
     ".claude/CLAUDE.md".source = mkSymlink "${hmDir}/claude/CLAUDE.md";
     ".pi/agent/AGENTS.md".source = mkSymlink "${hmDir}/pi/AGENTS.md";

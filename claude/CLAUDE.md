@@ -6,6 +6,7 @@
 - If there's no source code under claude-sources, clone the repo under there unless close-sourced.
 - I'm open for discussion, so always prefer asking questions if given prompt is ambiguous. Never make assumptions.
 - Use plain language, short sentences, and avoid dense or overly compressed phrasing.
+- Keep responses focused, brief, and concise. Keep disclaimers and caveats short, and spend most of the response on the main answer.
 
 ## Coding
 
@@ -23,10 +24,11 @@
 ## Memory
 
 - Aggressively save new things you've learned in this session to memory. Memory helps you skip redundant tool usage and save time.
-- Keep the memory index(MEMORY.md) minimal. The index should be a list pointing to other files, and those store all the details.
-- Try to organize MEMORY.md by grouping similar memories into sections.
+- One global store at `~/.claude/memory/` serves every project. Repo-only memory goes under `projects/<repo>/`; everything else goes by topic.
+- Memory is a tree, not one flat file: `MEMORY.md` → `<topic>/index.md` → `<topic>/<sub>/index.md` → memory files.
+- `MEMORY.md` lists only top-level topic dirs, one line each. Touch it only when adding or renaming a top-level dir.
+- Each dir has its own `index.md` with one line per memory or sub-dir. A new memory goes into the best-matching dir and is listed in that dir's `index.md` only.
+- Sub-indexes are not auto-loaded. Read the relevant `index.md` before working in an area, and before saving, to avoid duplicates.
+- Split a dir into sub-dirs once its `index.md` passes about 30 lines.
 
-## Current Project
-
-- I'm working on opearating production Ceph cluster.
-- I focus on opearating Ceph with reliability and high performance, trying to automate troubleshooting, deloyment, etc.
+@CLAUDE.local.md
