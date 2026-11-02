@@ -24,11 +24,11 @@
 ## Memory
 
 - Aggressively save new things you've learned in this session to memory. Memory helps you skip redundant tool usage and save time.
-- One global store at `~/.claude/memory/` serves every project. Repo-only memory goes under `projects/<repo>/`; everything else goes by topic.
+- One global store at `~/.agents/memory/` serves every project. Repo-only memory goes under `projects/<repo>/`; everything else goes by topic.
 - Memory is a tree, not one flat file: `MEMORY.md` → `<topic>/index.md` → `<topic>/<sub>/index.md` → memory files.
 - `MEMORY.md` lists only top-level topic dirs, one line each. Touch it only when adding or renaming a top-level dir.
 - Each dir has its own `index.md` with one line per memory or sub-dir. A new memory goes into the best-matching dir and is listed in that dir's `index.md` only.
 - Sub-indexes are not auto-loaded. Read the relevant `index.md` before working in an area, and before saving, to avoid duplicates.
 - Split a dir into sub-dirs once its `index.md` passes about 30 lines.
 
-@CLAUDE.local.md
+@~/.agents/AGENTS.local.md
